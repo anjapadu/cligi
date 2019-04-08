@@ -1,5 +1,5 @@
 {
-  "name": "g_cli",
+  "name": "@anjapadu/g_cli",
   "version": "1.0.0",
   "description": "",
   "main": "./index.js",

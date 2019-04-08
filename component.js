@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 let currentDir = process.cwd();
-let componentName = process.argv[2]
+let componentName = process.argv[3]
 
 
 fs.mkdir(currentDir + '/src/components/' + componentName + '/', { recursive: true }, (err) => {
