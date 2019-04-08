@@ -1,7 +1,7 @@
 const fs = require("fs");
 const utils = require('./utils');
 let currentDir = process.cwd();
-let projectName = process.argv[2];
+let projectName = process.argv[3];
 var exec = require('child_process').exec,
     child;
 const defaults = {

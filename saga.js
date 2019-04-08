@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 let currentDir = process.cwd();
-let sagaName = process.argv[2]
+let sagaName = process.argv[3]
 console.log(currentDir, sagaName)
 try {
     if (fs.existsSync(currentDir + `/src/sagas/${sagaName}.js`)) {

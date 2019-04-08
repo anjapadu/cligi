@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 let currentDir = process.cwd();
-let reducerName = process.argv[2]
+let reducerName = process.argv[3]
 console.log(currentDir, reducerName)
 try {
     if (fs.existsSync(currentDir + `/src/reducers/${reducerName}.js`)) {
