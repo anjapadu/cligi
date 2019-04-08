@@ -11,8 +11,9 @@ const defaults = {
 fs.mkdirSync(projectName, defaults.mode);
 utils.copyFolderRecursiveSync(`${__dirname}/templates/__boiler/`, `${currentDir}`);
 
-console.log('====INSTALANDO DEPENDENCIAS====');
-
+console.log(logSymbols.success, '\x1b[33m%s\x1b[0m', `========================================`);
+console.log(logSymbols.success, '\x1b[33m%s\x1b[0m', `========INSTALANDO_DEPENDENCIAS=========`);
+console.log(logSymbols.success, '\x1b[33m%s\x1b[0m', `========================================`);
 child = exec('yarn', {
     cwd: currentDir + '/' + '__boiler'
 },

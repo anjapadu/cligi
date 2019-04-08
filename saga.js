@@ -1,37 +1,39 @@
 const fs = require("fs");
+const logSymbols = require('log-symbols');
 
 let currentDir = process.cwd();
 let sagaName = process.argv[3]
-console.log(currentDir, sagaName)
 try {
     if (fs.existsSync(currentDir + `/src/sagas/${sagaName}.js`)) {
         //file exists   
-        console.log('FILE EXISTS');
+        // console.log('FILE EXISTS');
     } else {
-        console.log('NOT EXISTS');
+        // console.log('NOT EXISTS');
         let data = `
 import {
-call,
-select,
-xtakeLatest,
-fork,
-put,
-all
+    call,
+    select,
+    xtakeLatest,
+    fork,
+    put,
+    all
 } from 'redux-saga/effects';
+
 import {
 
-} from '../reducers/constants';
+} from '../constants';
 
 /***********************/
 /******Start here*******/
 /***********************/
+
 export default [
 
 ];
 `
         fs.writeFile(`${currentDir}/src/sagas/${sagaName}.js`, data, function (err, data) {
             if (err) console.log(err);
-            console.log("Successfully Written to File.");
+            console.log(logSymbols.success, '\x1b[32m' + `Saga ${sagaName} file created successfully` + '\x1b[0m');
             fs.readFile(`${currentDir}/src/sagas/index.js`, 'utf-8', function (err, data) {
                 if (err) throw err;
                 let codeArray = data.split('\n');
@@ -40,19 +42,19 @@ export default [
                 let lastYieldAllLine = findYieldAllSaga(codeArray);
                 codeArray.splice(lastYieldAllLine, 0, `        ...${sagaName}Saga,`)
                 if (codeArray[lastYieldAllLine - 1].trim()[codeArray[lastYieldAllLine - 1].trim().length - 1] === ',') {
-                    console.log('hasComa');
+                    // console.log('hasComa');
                 } else {
                     codeArray[lastYieldAllLine - 1] = '        ' + codeArray[lastYieldAllLine - 1].trim() + ','
                 }
                 fs.writeFile(`${currentDir}/src/sagas/index.js`, codeArray.join('\n'), 'utf-8', function (err) {
                     if (err) throw err;
-                    console.log('filelistAsync complete');
+                    console.log(logSymbols.success, '\x1b[32mSagas file modified successfully\x1b[0m');
                 });
             })
         });
     }
 } catch (err) {
-    console.log('NOT EXIST');
+    // console.log('NOT EXIST');
 
     console.error(err)
 }

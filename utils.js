@@ -38,6 +38,16 @@ function copyFolderRecursiveSync(source, target) {
     }
 }
 
+function removeBlankLines(array) {
+    return array.filter((item) => {
+        if (item.trim() !== '')
+            return true
+        return true
+    })
+}
+
+
 module.exports = {
-    copyFolderRecursiveSync
+    copyFolderRecursiveSync,
+    removeBlankLines
 }

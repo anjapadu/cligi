@@ -1,18 +1,17 @@
 const fs = require("fs");
-
+const logSymbols = require('log-symbols');
 let currentDir = process.cwd();
 let reducerName = process.argv[3]
-console.log(currentDir, reducerName)
 try {
     if (fs.existsSync(currentDir + `/src/reducers/${reducerName}.js`)) {
         //file exists   
-        console.log('FILE EXISTS');
+        // console.log('FILE EXISTS');
     } else {
-        console.log('NOT EXISTS');
+        // console.log('NOT EXISTS');
         let data = `
 import {
 
-} from './constants'
+} from '../constants'
 
 const INITIAL_STATE = {
    
@@ -28,7 +27,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
 `;
         fs.writeFile(`${currentDir}/src/reducers/${reducerName}.js`, data, function (err, data) {
             if (err) console.log(err);
-            console.log("Successfully Written to File.");
+            console.log(logSymbols.success, '\x1b[32m' + `Reducer ${reducerName} file created successfully` + '\x1b[0m');
             fs.readFile(`${currentDir}/src/reducers/index.js`, 'utf-8', function (err, data) {
                 if (err) throw err;
 
@@ -37,7 +36,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
                 codeArray.splice(lastImportLine + 1, 0, `import ${reducerName} from './${reducerName}'`);
 
                 if (codeArray[lastLine + 2 - 1].trim()[codeArray[lastLine + 2 - 1].trim().length - 1] === ',') {
-                    console.log('hasComa');
+                    // console.log('hasComa');
                 } else {
                     codeArray[lastLine + 2 - 1] = '    ' + codeArray[lastLine + 2 - 1].trim() + ','
                 }
@@ -46,7 +45,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
 
                 fs.writeFile(`${currentDir}/src/reducers/index.js`, codeArray.join('\n'), 'utf-8', function (err) {
                     if (err) throw err;
-                    console.log('filelistAsync complete');
+                    console.log(logSymbols.success, '\x1b[32mReducer file modified successfully\x1b[0m');
                 });
 
 

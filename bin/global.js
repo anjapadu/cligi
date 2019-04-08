@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var myLibrary = require('../index');
+// var myLibrary = require('../index');
 
 // Displays the text in the console
 
@@ -16,9 +16,21 @@ switch (process.argv[2]) {
     case 'component':
         require('../component');
         break;
+    case 'selector':
+        require('../selector');
+        break;
     case 'saga':
         require('../saga');
         break;
+    case 'action':
+        require('../action');
+        break;
+    case 'sstate':
+        require('../action');
+        require('../reducer');
+        require('../saga');
+        require('../selector');
+        break;
     default:
         console.log('Insert code')
-}
+}   

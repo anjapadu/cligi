@@ -11,5 +11,8 @@
   },
   "preferGlobal": true,
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "log-symbols": "^2.2.0"
+  }
 }
