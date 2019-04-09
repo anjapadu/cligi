@@ -10,8 +10,14 @@ switch (process.argv[2]) {
     case 'boiler':
         require('../boiler');
         break;
+    case 'route':
+        require('../route');
+        break;
     case 'reducer':
         require('../reducer');
+        break;
+    case 'container':
+        require("../container").createContainer();
         break;
     case 'component':
         require('../component');

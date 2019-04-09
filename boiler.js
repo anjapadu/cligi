@@ -1,4 +1,5 @@
 const fs = require("fs");
+const logSymbols = require('log-symbols');
 const utils = require('./utils');
 let currentDir = process.cwd();
 let projectName = process.argv[3];
@@ -11,9 +12,10 @@ const defaults = {
 fs.mkdirSync(projectName, defaults.mode);
 utils.copyFolderRecursiveSync(`${__dirname}/templates/__boiler/`, `${currentDir}`);
 
-console.log(logSymbols.success, '\x1b[33m%s\x1b[0m', `========================================`);
-console.log(logSymbols.success, '\x1b[33m%s\x1b[0m', `========INSTALANDO_DEPENDENCIAS=========`);
-console.log(logSymbols.success, '\x1b[33m%s\x1b[0m', `========================================`);
+console.log(logSymbols.info, '\x1b[33m========================================\x1b[0m', logSymbols.info);
+console.log(logSymbols.info, '\x1b[33m========INSTALANDO_DEPENDENCIAS=========\x1b[0m', logSymbols.info);
+console.log(logSymbols.info, '\x1b[33m========================================\x1b[0m', logSymbols.info);
+
 child = exec('yarn', {
     cwd: currentDir + '/' + '__boiler'
 },
