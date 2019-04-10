@@ -41,31 +41,32 @@ try {
                     component={() => <${containerName} />}
                     exact
                 />`)
-            codeArray.splice(fromImportIndex, 0, '');
+            if (codeArray[fromImportIndex - 1].trim()[codeArray[fromImportIndex - 1].trim().length - 1] === ',') {
+            } else {
+                codeArray[fromImportIndex - 1] = '  ' + codeArray[fromImportIndex - 1].trim() + ','
+            }
+            codeArray.splice(fromImportIndex, 0, `    ${containerName},`);
             fs.writeFile(`${currentDir}/src/router/index.js`, codeArray.join('\n'), 'utf-8', function (err) {
                 if (err) throw err;
                 console.log(logSymbols.success, '\x1b[32mRouter file modified successfully\x1b[0m');
             });
         })
-
-
     } else {
         /*** NO EXISTE ***/
     }
 } catch (err) {
     console.log('NOT EXIST');
-
     console.error(err)
 }
 
 function findCloseSwitchAnFromImport(array = []) {
     let closeSwitchIndex = -1;
-    let fromImportIndex = -1
+    let fromImportIndex = -1;
     array.forEach((item, index) => {
         if (item.indexOf('</Switch>') > -1) {
             closeSwitchIndex = index;
         }
-        if (item.indexOf(`from './asyncRoutes'` > -1)) {
+        if (item.indexOf("from './asyncRoutes'") > -1) {
             fromImportIndex = index;
         }
     })

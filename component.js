@@ -1,4 +1,5 @@
 const fs = require("fs");
+const logSymbols = require('log-symbols');
 
 let currentDir = process.cwd();
 let componentName = process.argv[3]
@@ -34,6 +35,7 @@ export default connect(mapStateToProps, {
 
     fs.writeFile(currentDir + '/src/components/' + componentName + '/' + "index.jsx", data, function (err, data) {
         if (err) console.log(err);
-        console.log("Successfully Written to File.");
+        console.log(logSymbols.success, '\x1b[32m' + `Component ${componentName} file created successfully` + '\x1b[0m');
+
     });
 });

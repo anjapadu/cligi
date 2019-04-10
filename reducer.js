@@ -30,7 +30,6 @@ export default (state = INITIAL_STATE, { type, payload }) => {
             console.log(logSymbols.success, '\x1b[32m' + `Reducer ${reducerName} file created successfully` + '\x1b[0m');
             fs.readFile(`${currentDir}/src/reducers/index.js`, 'utf-8', function (err, data) {
                 if (err) throw err;
-
                 let codeArray = data.split('\n');
                 let { lastImportLine, lastLine } = findLastImportIndexAndLastLine(codeArray);
                 codeArray.splice(lastImportLine + 1, 0, `import ${reducerName} from './${reducerName}'`);
@@ -47,8 +46,6 @@ export default (state = INITIAL_STATE, { type, payload }) => {
                     if (err) throw err;
                     console.log(logSymbols.success, '\x1b[32mReducer file modified successfully\x1b[0m');
                 });
-
-
             })
         });
     }
