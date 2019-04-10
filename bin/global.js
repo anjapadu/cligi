@@ -11,31 +11,32 @@ switch (process.argv[2]) {
         require('../boiler');
         break;
     case 'route':
-        require('../route');
+        require('../route').createRoute();
         break;
     case 'reducer':
-        require('../reducer');
+        require('../reducer').createReducer();
         break;
     case 'container':
         require("../container").createContainer();
         break;
     case 'component':
-        require('../component');
+        require('../component').createComponent();
         break;
     case 'selector':
-        require('../selector');
+        require('../selector').createSelector();
         break;
     case 'saga':
-        require('../saga');
+        require('../saga').createSaga();
         break;
     case 'action':
-        require('../action');
+        require('../action').createAction();
         break;
     case 'sstate':
-        require('../action');
-        require('../reducer');
-        require('../saga');
-        require('../selector');
+        require('../action').createAction();
+        require('../reducer').createReducer();
+        require('../saga').createSaga();
+        require('../selector').createSelector();
+        require("../constant").createConstant();
         break;
     default:
         console.log('Insert code')

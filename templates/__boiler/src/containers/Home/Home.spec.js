@@ -20,13 +20,11 @@ describe("Home component", () => {
     test("It renders and shows correct text", () => {
         const component = create(<Provider
             store={store}
-        ><Home /></Provider>);
-
+        >
+            <Home />
+        </Provider>);
         const rootInstance = component.root;
         const h2 = rootInstance.findByType("h2");
         expect(h2.props.children).toBe("HOME")
     });
 })
-
-
-

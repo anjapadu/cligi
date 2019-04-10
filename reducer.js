@@ -1,22 +1,24 @@
 const fs = require("fs");
 const logSymbols = require('log-symbols');
 let currentDir = process.cwd();
-let reducerName = process.argv[3]
-try {
-    if (fs.existsSync(currentDir + `/src/reducers/${reducerName}.js`)) {
-        //file exists   
-        // console.log('FILE EXISTS');
-    } else {
-        // console.log('NOT EXISTS');
-        let data = `
-import {
+let reducerName = process.argv[3];
 
+const app = {}
+
+app.createReducer = function () {
+    try {
+        if (fs.existsSync(currentDir + `/src/reducers/${reducerName}.js`)) {
+            //file exists   
+            // console.log('FILE EXISTS');
+        } else {
+            // console.log('NOT EXISTS');
+            let data = `import {
 } from '../constants'
-
+    
 const INITIAL_STATE = {
-   
+       
 }
-
+    
 export default (state = INITIAL_STATE, { type, payload }) => {
     switch (type) {
         
@@ -24,36 +26,39 @@ export default (state = INITIAL_STATE, { type, payload }) => {
             return state;
     }
 }
-`;
-        fs.writeFile(`${currentDir}/src/reducers/${reducerName}.js`, data, function (err, data) {
-            if (err) console.log(err);
-            console.log(logSymbols.success, '\x1b[32m' + `Reducer ${reducerName} file created successfully` + '\x1b[0m');
-            fs.readFile(`${currentDir}/src/reducers/index.js`, 'utf-8', function (err, data) {
-                if (err) throw err;
-                let codeArray = data.split('\n');
-                let { lastImportLine, lastLine } = findLastImportIndexAndLastLine(codeArray);
-                codeArray.splice(lastImportLine + 1, 0, `import ${reducerName} from './${reducerName}'`);
-
-                if (codeArray[lastLine + 2 - 1].trim()[codeArray[lastLine + 2 - 1].trim().length - 1] === ',') {
-                    // console.log('hasComa');
-                } else {
-                    codeArray[lastLine + 2 - 1] = '    ' + codeArray[lastLine + 2 - 1].trim() + ','
-                }
-
-                codeArray.splice(lastLine + 2, 0, `    ${reducerName},`)
-
-                fs.writeFile(`${currentDir}/src/reducers/index.js`, codeArray.join('\n'), 'utf-8', function (err) {
+    `;
+            fs.writeFile(`${currentDir}/src/reducers/${reducerName}.js`, data, function (err, data) {
+                if (err) console.log(err);
+                console.log(logSymbols.success, '\x1b[32m' + `Reducer ${reducerName} file created successfully` + '\x1b[0m');
+                fs.readFile(`${currentDir}/src/reducers/index.js`, 'utf-8', function (err, data) {
                     if (err) throw err;
-                    console.log(logSymbols.success, '\x1b[32mReducer file modified successfully\x1b[0m');
-                });
-            })
-        });
-    }
-} catch (err) {
-    console.log('NOT EXIST');
+                    let codeArray = data.split('\n');
+                    let { lastImportLine, lastLine } = findLastImportIndexAndLastLine(codeArray);
+                    codeArray.splice(lastImportLine + 1, 0, `import ${reducerName} from './${reducerName}'`);
 
-    console.error(err)
+                    if (codeArray[lastLine + 2 - 1].trim()[codeArray[lastLine + 2 - 1].trim().length - 1] === ',') {
+                        // console.log('hasComa');
+                    } else {
+                        codeArray[lastLine + 2 - 1] = '    ' + codeArray[lastLine + 2 - 1].trim() + ','
+                    }
+
+                    codeArray.splice(lastLine + 2, 0, `    ${reducerName},`)
+
+                    fs.writeFile(`${currentDir}/src/reducers/index.js`, codeArray.join('\n'), 'utf-8', function (err) {
+                        if (err) throw err;
+                        console.log(logSymbols.success, '\x1b[32mReducer file modified successfully\x1b[0m');
+                    });
+                })
+            });
+        }
+    } catch (err) {
+        console.log('NOT EXIST');
+
+        console.error(err)
+    }
 }
+
+
 
 
 
@@ -76,3 +81,5 @@ function findLastImportIndexAndLastLine(array) {
     })
     return { lastImportLine, lastLine };
 }
+
+module.exports = app;
